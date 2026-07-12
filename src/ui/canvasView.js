@@ -278,10 +278,10 @@ export class CanvasView {
       this.state.set(State.SELECTING)
     } else if (e.touches.length === 2) {
       this._isDrawing = false
-      // Store initial pinch distance for zoom
       const t = e.touches
       this._pinchDist = Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY)
       this._pinchScale = this.scale
+      this._pinchOffset = { x: this.offsetX, y: this.offsetY }
       this._pinchCenter = {
         x: (t[0].clientX + t[1].clientX) / 2,
         y: (t[0].clientY + t[1].clientY) / 2,
@@ -308,14 +308,19 @@ export class CanvasView {
       const dist = Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY)
       const newScale = Math.max(0.1, Math.min(20, this._pinchScale * (dist / this._pinchDist)))
 
-      const cx = this._pinchCenter.x
-      const cy = this._pinchCenter.y
-      const rect = this.canvas.getBoundingClientRect()
-      const mx = cx - rect.left
-      const my = cy - rect.top
+      // Pan: track center movement
+      const cx = (t[0].clientX + t[1].clientX) / 2
+      const cy = (t[0].clientY + t[1].clientY) / 2
+      const dx = cx - this._pinchCenter.x
+      const dy = cy - this._pinchCenter.y
 
-      this.offsetX = mx - (mx - this.offsetX) * (newScale / this.scale)
-      this.offsetY = my - (my - this.offsetY) * (newScale / this.scale)
+      // Apply zoom centered on the initial pinch center
+      const rect = this.canvas.getBoundingClientRect()
+      const mx = this._pinchCenter.x - rect.left
+      const my = this._pinchCenter.y - rect.top
+
+      this.offsetX = this._pinchOffset.x + dx
+      this.offsetY = this._pinchOffset.y + dy
       this.scale = newScale
 
       this.render()
