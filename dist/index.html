@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YX图片去水印</title>
+  <script type="module" crossorigin src="./assets/index-BKpFnYcQ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D5Go6E1l.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="toolbar">
+      <div class="header">
+        <svg class="icon" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="#007aff" stroke-width="1.5"/>
+          <path d="M10 14l3 3 5-6" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 8l2 2" stroke="#34c759" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M14 4v2M20 8l1-1M22 14h2M20 20l1 1M14 22v2M8 20l-1 1M6 14H4M8 8L7 7" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <h2>YX图片去水印</h2>
+      </div>
+      <div class="tool-group">
+        <button id="btn-upload" class="btn primary btn-pill" title="点击上传图片或直接拖拽到画布">上传图片</button>
+        <input type="file" id="file-input" accept="image/*" hidden />
+      </div>
+      <div class="tool-group row">
+        <button id="btn-undo" class="btn danger" disabled>撤销</button>
+        <button id="btn-clear" class="btn danger" disabled>清除</button>
+        <span id="sel-count" class="badge">0</span>
+      </div>
+      <div class="tool-group">
+        <button id="btn-process" class="btn primary btn-pill" disabled>去水印</button>
+      </div>
+      <div class="tool-group row">
+        <button id="btn-compare" class="btn" disabled>对比原图</button>
+      </div>
+      <div class="tool-group row">
+        <button id="btn-export" class="btn success" disabled>导出结果</button>
+        <select id="export-format" disabled>
+          <option value="png">PNG</option>
+          <option value="jpeg">JPEG</option>
+          <option value="webp">WebP</option>
+        </select>
+      </div>
+      <div class="tip">选区越小，速度越快，效果越好哦~</div>
+      <div id="status-bar" class="status idle">等待上传图片...</div>
+      <div class="hints">
+        <p>拖拽图片到画布区域</p>
+        <p>鼠标拖拽绘制选区</p>
+        <p>右键拖拽平移画布 · 滚轮缩放</p>
+        <p>点击选区可删除</p>
+      </div>
+    </aside>
+    <main id="canvas-container">
+      <div id="drop-hint">拖拽图片到此处</div>
+      <canvas id="main-canvas"></canvas>
+    </main>
+  </div>
+</body>
+</html>
