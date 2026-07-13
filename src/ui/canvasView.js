@@ -1,4 +1,5 @@
 import { State } from '../core/state.js'
+import { t } from '../i18n.js'
 
 export class CanvasView {
   constructor(container, stateMachine, selectionManager) {
@@ -37,6 +38,8 @@ export class CanvasView {
     this.state.on(State.PROCESSING, () => this._startAnim())
     this.state.on(State.COMPLETED, () => this._stopAnim())
     this.state.on(State.ERROR, () => this._stopAnim())
+
+    document.addEventListener('localechange', () => this.render())
   }
 
   _resize() {
@@ -427,7 +430,7 @@ export class CanvasView {
     ctx.font = '12px sans-serif'
     ctx.textAlign = 'center'
     ctx.fillText(
-      `${this.imageWidth} × ${this.imageHeight}  缩放: ${Math.round(this.scale * 100)}%`,
+      `${this.imageWidth} × ${this.imageHeight}  ${t('zoom', { pct: Math.round(this.scale * 100) })}`,
       w / 2,
       h - 12
     )

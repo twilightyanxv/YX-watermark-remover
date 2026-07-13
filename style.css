@@ -35,8 +35,8 @@ html, body {
 /* ─── Toolbar ─── */
 
 #toolbar {
-  width: 280px;
-  min-width: 280px;
+  width: 302px;
+  min-width: 302px;
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
@@ -55,6 +55,42 @@ html, body {
   align-items: center;
   gap: 14px;
   padding: 0 4px;
+}
+
+/* ─── Language Switcher ─── */
+
+.tb-lang {
+  display: flex;
+  gap: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  align-self: center;
+}
+
+.lang-opt {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--card);
+  color: var(--text-dim);
+  font-family: inherit;
+  user-select: none;
+}
+
+.lang-opt + .lang-opt {
+  border-left: 1px solid rgba(255,255,255,0.06);
+}
+
+.lang-opt:hover {
+  color: var(--text);
+}
+
+.lang-opt.active {
+  background: var(--primary);
+  color: #fff;
 }
 
 .tb-logo {
@@ -197,8 +233,8 @@ html, body {
   background: linear-gradient(180deg, #2b88ff 0%, #1677FF 100%);
   color: #fff;
   font-weight: 600;
-  font-size: 15px;
-  padding: 12px 20px;
+  font-size: 16px;
+  padding: 14px 20px;
   border-radius: var(--radius);
   box-shadow: 0 4px 16px rgba(22, 119, 255, 0.3);
   flex: 1;
@@ -231,22 +267,12 @@ html, body {
   gap: 10px;
 }
 
-.tb-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  background: var(--card);
-  border-radius: var(--radius-card);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-
 /* ─── Export Format Select ─── */
 
 #export-format {
-  padding: 11px 14px;
+  padding: 13px 14px;
   border-radius: var(--radius);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   background: var(--card);
   color: var(--text-dim);
@@ -452,59 +478,49 @@ html, body {
   }
 
   .btn-solid {
-    font-size: 13px;
-    padding: 10px 16px;
+    font-size: 12px;
+    padding: 8px 12px;
     border-radius: 999px;
   }
 
   .btn-lg {
-    font-size: 13px;
-    padding: 10px 16px;
-  }
-
-  .btn-solid .fa {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 8px 12px;
   }
 
   .btn-light {
-    font-size: 12px;
-    padding: 10px 12px;
+    font-size: 11px;
+    padding: 6px 10px;
     min-width: auto;
-    border-radius: 12px;
-  }
-
-  .btn-light .fa {
-    font-size: 13px;
+    border-radius: 10px;
   }
 
   .btn-outline {
-    font-size: 12px;
-    padding: 10px 14px;
-    border-radius: 12px;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 10px;
   }
 
   .btn-export {
-    font-size: 12px;
-    padding: 8px 14px;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  #toolbar .btn .fa {
+    display: none;
   }
 
   .tb-row {
     flex-shrink: 0;
   }
 
-  .tb-card {
-    padding: 8px 12px;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
   #export-format {
-    padding: 8px 10px;
-    font-size: 12px;
-    border-radius: 12px;
-    background-position: right 8px center;
-    padding-right: 26px;
-    min-width: 60px;
+    padding: 6px 8px;
+    font-size: 11px;
+    border-radius: 10px;
+    background-position: right 6px center;
+    padding-right: 22px;
+    min-width: 55px;
   }
 
   .tb-tip {
@@ -513,6 +529,11 @@ html, body {
 
   .tb-status {
     display: none;
+  }
+
+  .tb-lang {
+    display: flex;
+    /* margin: 0 auto; */
   }
 
   #canvas-container {

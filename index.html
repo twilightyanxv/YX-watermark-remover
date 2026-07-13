@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YX图片去水印</title>
+  <title data-i18n="title">YX图片去水印</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -11,55 +11,49 @@
 <body>
   <div id="app">
     <aside id="toolbar">
-      <!-- 顶部标题 -->
       <div class="tb-header">
         <div class="tb-logo">
           <i class="fa fa-clock-o"></i>
         </div>
         <div class="tb-title">
-          <h1>YX图片去水印</h1>
-          <p>AI智能一键消除图片水印</p>
+          <h1 data-i18n="title">YX图片去水印</h1>
+          <p data-i18n="subtitle">纯本地处理，保护您的隐私</p>
         </div>
       </div>
       <div class="tb-divider"></div>
 
-      <!-- 上传图片 -->
       <div class="tb-section">
-        <button id="btn-upload" class="btn btn-solid" title="点击上传图片或直接拖拽到画布">
+        <button id="btn-upload" class="btn btn-solid" data-i18n="upload" data-i18n-title="uploadTitle">
           <i class="fa fa-cloud-upload"></i>
           上传图片
         </button>
-        <span class="tb-hint">支持 JPG / PNG / WebP 格式</span>
+        <span class="tb-hint" data-i18n="uploadHint">支持 JPG / PNG / WebP 格式</span>
         <input type="file" id="file-input" accept="image/*" hidden />
       </div>
 
-      <!-- 撤销 + 清除 -->
       <div class="tb-row">
-        <button id="btn-undo" class="btn btn-light" disabled>
+        <button id="btn-undo" class="btn btn-light" data-i18n="undo" disabled>
           <i class="fa fa-undo"></i>
           撤销
         </button>
-        <button id="btn-clear" class="btn btn-light" disabled>
+        <button id="btn-clear" class="btn btn-light" data-i18n="clear" disabled>
           <i class="fa fa-trash-o"></i>
           清除
         </button>
       </div>
 
-      <!-- 去水印主按钮 -->
-      <button id="btn-process" class="btn btn-solid btn-lg" disabled>
+      <button id="btn-process" class="btn btn-solid btn-lg" data-i18n="process" disabled>
         <i class="fa fa-magic"></i>
         去水印
       </button>
 
-      <!-- 对比原图 -->
-      <button id="btn-compare" class="btn btn-outline" disabled>
+      <button id="btn-compare" class="btn btn-outline" data-i18n="compare" disabled>
         <i class="fa fa-columns"></i>
         对比原图
       </button>
 
-      <!-- 导出卡片 -->
-      <div class="tb-card">
-        <button id="btn-export" class="btn btn-export" disabled>
+      <div class="tb-row">
+        <button id="btn-export" class="btn btn-export" data-i18n="export" disabled>
           <i class="fa fa-download"></i>
           导出结果
         </button>
@@ -70,21 +64,24 @@
         </select>
       </div>
 
-      <!-- 提示气泡 -->
       <div class="tb-tip">
         <i class="fa fa-lightbulb-o"></i>
-        <span>选区越小，速度越快，效果越好哦</span>
+        <span data-i18n="tip">选区越小，速度越快，效果越好哦</span>
       </div>
 
-      <!-- 底部状态 -->
       <div id="status-bar" class="tb-status">
         <i class="fa fa-cloud"></i>
-        <span>等待上传图片...</span>
+        <span data-i18n="statusIdle">等待上传图片...</span>
+      </div>
+
+      <div class="tb-lang" id="lang-group">
+        <span class="lang-opt" data-lang="zh">中</span>
+        <span class="lang-opt" data-lang="en">EN</span>
       </div>
     </aside>
 
     <main id="canvas-container">
-      <div id="drop-hint">拖拽图片到此处</div>
+      <div id="drop-hint" data-i18n="dropHint">拖拽或点击上传图片</div>
       <canvas id="main-canvas"></canvas>
     </main>
   </div>

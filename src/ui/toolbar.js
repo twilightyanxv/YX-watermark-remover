@@ -1,4 +1,5 @@
 import { State } from '../core/state.js'
+import { t, setLocale, getLocale } from '../i18n.js'
 
 export class Toolbar {
   constructor(stateMachine, selectionManager, uploadManager, canvasView, workerClient) {
@@ -19,6 +20,8 @@ export class Toolbar {
 
     this._initEvents()
     this._initStateListeners()
+    this._initLang()
+    this._updateUI()
   }
 
   _initEvents() {
@@ -45,13 +48,21 @@ export class Toolbar {
 
     this._btnCompare.addEventListener('click', () => {
       this.canvas.toggleCompare()
-      this._setBtnText(this._btnCompare, this.canvas.showOriginal ? '查看结果' : '对比原图')
+      this._setBtnText(this._btnCompare, this.canvas.showOriginal ? t('showResult') : t('compare'))
     })
 
     const container = document.getElementById('canvas-container')
     container.addEventListener('selectionchange', () => this._updateUI())
     container.addEventListener('comparechange', (e) => {
-      this._setBtnText(this._btnCompare, e.detail.showOriginal ? '查看结果' : '对比原图')
+      this._setBtnText(this._btnCompare, e.detail.showOriginal ? t('showResult') : t('compare'))
+    })
+
+    document.addEventListener('localechange', () => {
+      this._updateUI()
+      this._setBtnText(
+        this._btnCompare,
+        this.canvas.showOriginal ? t('showResult') : t('compare')
+      )
     })
   }
 
@@ -61,6 +72,29 @@ export class Toolbar {
     this.state.on(State.PROCESSING, () => this._updateUI())
     this.state.on(State.COMPLETED, () => this._updateUI())
     this.state.on(State.ERROR, () => this._updateUI())
+  }
+
+  _initLang() {
+    const group = document.getElementById('lang-group')
+    if (!group) return
+
+    const setActive = (locale) => {
+      group.querySelectorAll('.lang-opt').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === locale)
+      })
+    }
+
+    setActive(getLocale())
+
+    group.addEventListener('click', (e) => {
+      const opt = e.target.closest('.lang-opt')
+      if (!opt) return
+      setLocale(opt.dataset.lang)
+    })
+
+    document.addEventListener('localechange', (e) => {
+      setActive(e.detail.locale)
+    })
   }
 
   _updateUI() {
@@ -80,32 +114,32 @@ export class Toolbar {
 
     switch (st) {
       case State.IDLE:
-        this._setStatus('等待上传图片...', 'idle')
+        this._setStatus(t('statusIdle'), 'idle')
         break
       case State.IMAGE_LOADED:
-        this._setStatus(`图片已加载 · ${this.sel.count} 个选区`, '')
+        this._setStatus(t('statusLoaded', { count: this.sel.count }), '')
         break
       case State.PROCESSING:
-        this._setStatus('正在去水印...', 'processing')
+        this._setStatus(t('statusProcessing'), 'processing')
         break
       case State.COMPLETED:
-        this._setStatus('去水印完成 ✓', 'completed')
+        this._setStatus(t('statusCompleted'), 'completed')
         break
       case State.ERROR:
-        this._setStatus('处理出错，请重试', 'error')
+        this._setStatus(t('statusError'), 'error')
         break
     }
-  }
-
-  _setBtnText(btn, text) {
-    const textNode = Array.from(btn.childNodes).find(n => n.nodeType === 3 && n.textContent.trim())
-    if (textNode) textNode.textContent = ' ' + text
   }
 
   _setStatus(text, className) {
     const span = this._statusBar.querySelector('span')
     if (span) span.textContent = text
     this._statusBar.className = 'tb-status' + (className ? ' ' + className : '')
+  }
+
+  _setBtnText(btn, text) {
+    const textNode = Array.from(btn.childNodes).find(n => n.nodeType === 3 && n.textContent.trim())
+    if (textNode) textNode.textContent = ' ' + text
   }
 
   async _process() {
@@ -126,7 +160,7 @@ export class Toolbar {
       this.canvas.setProcessedResult(result)
       this.sel.clear()
       this.state.set(State.COMPLETED)
-      this._setBtnText(this._btnCompare, '对比原图')
+      this._setBtnText(this._btnCompare, t('compare'))
       this._updateUI()
     } catch (err) {
       console.error('Processing error:', err)
