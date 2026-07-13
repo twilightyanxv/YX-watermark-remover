@@ -5,53 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YX图片去水印</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon-CQGUVfdJ.svg" />
-  <script type="module" crossorigin src="./assets/index-BLRmQS6q.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DaiZksqp.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script type="module" crossorigin src="./assets/index-WrOj9Os7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DhCCc5Wk.css">
 </head>
 <body>
   <div id="app">
     <aside id="toolbar">
-      <div class="header">
-        <svg class="icon" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="13" stroke="#007aff" stroke-width="1.5"/>
-          <path d="M10 14l3 3 5-6" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M18 8l2 2" stroke="#34c759" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M14 4v2M20 8l1-1M22 14h2M20 20l1 1M14 22v2M8 20l-1 1M6 14H4M8 8L7 7" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-linecap="round"/>
-        </svg>
-        <h2>YX图片去水印</h2>
+      <!-- 顶部标题 -->
+      <div class="tb-header">
+        <div class="tb-logo">
+          <i class="fa fa-clock-o"></i>
+        </div>
+        <div class="tb-title">
+          <h1>YX图片去水印</h1>
+          <p>AI智能一键消除图片水印</p>
+        </div>
       </div>
-      <div class="tool-group">
-        <button id="btn-upload" class="btn primary btn-pill" title="点击上传图片或直接拖拽到画布">上传图片</button>
+      <div class="tb-divider"></div>
+
+      <!-- 上传图片 -->
+      <div class="tb-section">
+        <button id="btn-upload" class="btn btn-solid" title="点击上传图片或直接拖拽到画布">
+          <i class="fa fa-cloud-upload"></i>
+          上传图片
+        </button>
+        <span class="tb-hint">支持 JPG / PNG / WebP 格式</span>
         <input type="file" id="file-input" accept="image/*" hidden />
       </div>
-      <div class="tool-group row">
-        <button id="btn-undo" class="btn danger" disabled>撤销</button>
-        <button id="btn-clear" class="btn danger" disabled>清除</button>
-        <span id="sel-count" class="badge">0</span>
+
+      <!-- 撤销 + 清除 -->
+      <div class="tb-row">
+        <button id="btn-undo" class="btn btn-light" disabled>
+          <i class="fa fa-undo"></i>
+          撤销
+        </button>
+        <button id="btn-clear" class="btn btn-light" disabled>
+          <i class="fa fa-trash-o"></i>
+          清除
+        </button>
       </div>
-      <div class="tool-group">
-        <button id="btn-process" class="btn primary btn-pill" disabled>去水印</button>
-      </div>
-      <div class="tool-group row">
-        <button id="btn-compare" class="btn" disabled>对比原图</button>
-      </div>
-      <div class="tool-group row">
-        <button id="btn-export" class="btn success" disabled>导出结果</button>
-        <select id="export-format" disabled>
-          <option value="png">PNG</option>
+
+      <!-- 去水印主按钮 -->
+      <button id="btn-process" class="btn btn-solid btn-lg" disabled>
+        <i class="fa fa-magic"></i>
+        去水印
+      </button>
+
+      <!-- 对比原图 -->
+      <button id="btn-compare" class="btn btn-outline" disabled>
+        <i class="fa fa-columns"></i>
+        对比原图
+      </button>
+
+      <!-- 导出卡片 -->
+      <div class="tb-card">
+        <button id="btn-export" class="btn btn-export" disabled>
+          <i class="fa fa-download"></i>
+          导出结果
+        </button>
+        <select id="export-format">
+          <option value="png" selected>PNG</option>
           <option value="jpeg">JPEG</option>
           <option value="webp">WebP</option>
         </select>
       </div>
-      <div class="tip">选区越小，速度越快，效果越好哦~</div>
-      <div id="status-bar" class="status idle">等待上传图片...</div>
-      <div class="hints">
-        <p>拖拽图片到画布区域</p>
-        <p>鼠标拖拽绘制选区</p>
-        <p>右键拖拽平移画布 · 滚轮缩放</p>
-        <p>点击选区可删除</p>
+
+      <!-- 提示气泡 -->
+      <div class="tb-tip">
+        <i class="fa fa-lightbulb-o"></i>
+        <span>选区越小，速度越快，效果越好哦~</span>
+      </div>
+
+      <!-- 底部状态 -->
+      <div id="status-bar" class="tb-status">
+        <i class="fa fa-cloud"></i>
+        <span>等待上传图片...</span>
       </div>
     </aside>
+
     <main id="canvas-container">
       <div id="drop-hint">拖拽图片到此处</div>
       <canvas id="main-canvas"></canvas>

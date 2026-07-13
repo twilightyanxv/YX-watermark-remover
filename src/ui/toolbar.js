@@ -14,7 +14,6 @@ export class Toolbar {
     this._btnProcess = document.getElementById('btn-process')
     this._btnExport = document.getElementById('btn-export')
     this._btnCompare = document.getElementById('btn-compare')
-    this._selCount = document.getElementById('sel-count')
     this._statusBar = document.getElementById('status-bar')
     this._exportFormat = document.getElementById('export-format')
 
@@ -46,14 +45,13 @@ export class Toolbar {
 
     this._btnCompare.addEventListener('click', () => {
       this.canvas.toggleCompare()
-      this._btnCompare.textContent = this.canvas.showOriginal ? '查看结果' : '对比原图'
+      this._setBtnText(this._btnCompare, this.canvas.showOriginal ? '查看结果' : '对比原图')
     })
 
-    // Listen for selection changes from canvas
     const container = document.getElementById('canvas-container')
     container.addEventListener('selectionchange', () => this._updateUI())
     container.addEventListener('comparechange', (e) => {
-      this._btnCompare.textContent = e.detail.showOriginal ? '查看结果' : '对比原图'
+      this._setBtnText(this._btnCompare, e.detail.showOriginal ? '查看结果' : '对比原图')
     })
   }
 
@@ -80,8 +78,6 @@ export class Toolbar {
     this._exportFormat.disabled = !hasResult
     this._btnUpload.disabled = isProcessing
 
-    this._selCount.textContent = this.sel.count
-
     switch (st) {
       case State.IDLE:
         this._setStatus('等待上传图片...', 'idle')
@@ -101,9 +97,15 @@ export class Toolbar {
     }
   }
 
+  _setBtnText(btn, text) {
+    const textNode = Array.from(btn.childNodes).find(n => n.nodeType === 3 && n.textContent.trim())
+    if (textNode) textNode.textContent = ' ' + text
+  }
+
   _setStatus(text, className) {
-    this._statusBar.textContent = text
-    this._statusBar.className = 'status' + (className ? ' ' + className : '')
+    const span = this._statusBar.querySelector('span')
+    if (span) span.textContent = text
+    this._statusBar.className = 'tb-status' + (className ? ' ' + className : '')
   }
 
   async _process() {
@@ -112,7 +114,6 @@ export class Toolbar {
     this.state.set(State.PROCESSING)
 
     try {
-      // Get image data from canvas
       const img = this.canvas.originalImage
       const offscreen = new OffscreenCanvas(img.width, img.height)
       const octx = offscreen.getContext('2d')
@@ -125,7 +126,7 @@ export class Toolbar {
       this.canvas.setProcessedResult(result)
       this.sel.clear()
       this.state.set(State.COMPLETED)
-      this._btnCompare.textContent = '对比原图'
+      this._setBtnText(this._btnCompare, '对比原图')
       this._updateUI()
     } catch (err) {
       console.error('Processing error:', err)
