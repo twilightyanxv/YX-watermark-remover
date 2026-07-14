@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://watermark-remover.yanxv.com/sitemap.xml

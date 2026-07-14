@@ -20,6 +20,7 @@ const locales = {
     statusError: '处理出错，请重试',
     zoom: '缩放: {pct}%',
     langSwitcher: 'EN',
+    metaDescription: 'YX图片去水印 - 纯本地、免费在线去水印工具。无需上传，保护隐私，智能算法快速去除图片水印。',
   },
   en: {
     title: 'YX Watermark Remover',
@@ -42,6 +43,7 @@ const locales = {
     statusError: 'Error, please retry',
     zoom: 'Zoom: {pct}%',
     langSwitcher: '中',
+    metaDescription: 'YX Watermark Remover - Free online watermark removal tool. 100% local processing, privacy safe. Smart algorithm removes watermarks from images.',
   },
 }
 
@@ -80,7 +82,9 @@ function applyDataI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n
     const text = t(key)
-    if (el.children.length > 0) {
+    if (el.tagName === 'META') {
+      el.content = text
+    } else if (el.children.length > 0) {
       const nodes = Array.from(el.childNodes)
       const textNode = nodes.find(n => n.nodeType === 3 && n.textContent.trim())
       if (textNode) textNode.textContent = ' ' + text
